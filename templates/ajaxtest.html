@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ajaxtest.html</title>
+
+</head>
+<body>
+    
+<h3> 비동기로 java 기반의 다른 서버의 로직 요청</h3>
+<br><hr><br>
+
+<button onclick="ajaxReq()">비동기 요청</button>
+
+<div id="dataView"></div>
+<script>
+
+    function ajaxReq(){
+        const xhttp = new XMLHttpRequest();
+        xhttp.onreadystatechange = function(){
+            if(this.readyState == 4 && this.status == 200){
+                document.getElementById("dataView").innerHTML = this.responseText;
+
+            }
+        };
+
+        xhttp.open("get", "http://localhost:8080/step13_Ajax/step03flask.jsp?msg=playdata");
+        xhttp.send();
+    }
+
+</script>
+
+</body>
+</html>

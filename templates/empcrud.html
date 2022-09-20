@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+
+    <h3>step01. 직원 등록</h3>
+    사원번호 : <input type="text" id="newEmpno" value="1"> <br>
+    사원명 : <input type="text" id="newEname" value="재석"> <br>
+    사원급여 : <input type="text" id="newSal" value="100"> <br>
+    <button id="insertBtn" onclick="insertEmp()">등록</button>
+    
+    <br><hr><br>
+    <h5>직원 정보 보기 </h5>
+    사원번호 : <input type="text" id="empno" > <br>
+    사원명 : <input type="text" id="ename"> <br>
+    사원급여 : <input type="text" id="sal"> <br>
+    <br><hr color="red"><br>
+
+
+
+
+    <h3>검색된 직원 정보</h3>
+    <button onclick="myAjax()">1. 직원 검색 사번입력- get요청 </button> <br>
+    사원번호 : <input type="text" id="uempno" value="7369"> <br>
+    이름 : <input type="text" id="uname"> <br>
+    나이 : <input type="text" id="uage"> <br>
+
+    <br><hr><br>
+
+
+
+    <h3>직원 정보 수정 등록</h3>
+    사원번호 : <input type="text" id="newEmpno" value="1"> <br>
+    사원급여 : <input type="text" id="newSal" value="100"> <br>
+    <button id="insertBtn" onclick="insertEmp()">등록</button>
+
+    <br><hr><br>
+
+    ????
+    <button id="delBtn">직원 퇴사 </button>
+<script>
+        //등록
+        function insertEmp(){
+            const xhttp = new XMLHttpRequest();
+            xhttp.onreadystatechange = function () {
+                if (this.readyState == 4 && this.status == 200) {
+                    // alert("응답 " + this.responseText);  json 포멧에 한해서 정상 수용
+
+                    data = this.responseText;
+                    data = JSON.parse(data);
+                    document.getElementById("empno").value = document.getElementById("newEmpno").value;
+                    document.getElementById("ename").value = data.ename;
+                    document.getElementById("sal").value = data.sal;
+                }
+            };
+            xhttp.open("POST", "insert");   //http://ip:port/insert
+            xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+
+            //empno=값&ename=값 
+            queryString = "empno="+document.getElementById("newEmpno").value
+                        +"&ename="+document.getElementById("newEname").value
+                        +"&sal="+document.getElementById("newSal").value;
+            xhttp.send(queryString);
+        }
+
+        function myAjax2() {
+            const xhttp = new XMLHttpRequest();
+            xhttp.onreadystatechange = function () {
+                if (this.readyState == 4 && this.status == 200) {
+                    data = this.responseText;
+                    data = JSON.parse(data);
+                    document.getElementById("ename").value = data.ename;
+                    document.getElementById("sal").value = data.sal;
+                }
+            };
+            xhttp.open("POST", "getemp");
+            //post 방식으로 비동기로 데이터 전송시 필수 설정
+            xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+            //server에 parameter로 데이터 전송시 send() 활용
+            xhttp.send("empno="+document.getElementById("empno").value);
+        }
+        //get방식 요청/응답 처리 코드
+        function myAjax() {
+            const xhttp = new XMLHttpRequest();
+            xhttp.onreadystatechange = function () {
+                if (this.readyState == 4 && this.status == 200) {
+                    data = this.responseText;
+                    data = JSON.parse(data);
+                    document.getElementById('uname').value = data.ename;
+                    document.getElementById('uage').value = data.sal;
+                }
+            };
+            xhttp.open("GET", "getemp?empno=" + document.getElementById('uempno').value);
+            xhttp.send();
+        }
+    </script>
+</body>
+</html>

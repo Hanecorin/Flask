@@ -1,0 +1,30 @@
+1.작업단계
+    html을 공유
+        - 코드가 은근 개차반
+        - 코드를 기반으로 table 구조 고려 및 설계
+            존재하는 emp table 사용 부적합
+            해결책 ; emp table로 부터 emp01을 복제해서 생성
+                타입과 데이터 그대로 사용 가능
+                단, 제약조건은 복제에서 제외
+                제약조건 추가 방법 - alter 명령어로 존재하는 table 구조 변경
+
+
+
+2. 사용 table 관련 명령어
+    create table emp01 as select empno, ename, sal from emp;
+    desc emp01;
+        제약조건이 없음 확인
+
+    alter table emp01 add constraint pk_empno_emp01 primary key(empno);
+    desc emp01;
+        제약조건 존재 확인
+
+
+3. 생성된 table에 적합하게 html 파일 수정
+
+4. 실전 코딩
+    1. table 생성, 데이터 존재
+    2. dto개발
+    3. html과 app*.py 개발 후 실행 내 놓기
+    4. dao 의 insert 로직 개발
+    5. html -> 

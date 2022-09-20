@@ -1,0 +1,98 @@
+flask 
+
+1.  web 개발 framework
+    1. server 필수
+    2. ip는 장비에 설정
+    3. port 가변적으로 수정 가능
+    4. 서버 실행 작업
+        if __name__ == "__main__":
+            서버 구동 코드
+            port 번호 지정
+
+2.  개발 환경 구축
+    conda create –n webenv python=3.6
+    conda activate webenv
+    pip install flask
+    pip install flask-restx
+
+    pip list
+
+3. vsc 작업 연습
+
+    1. terminal 실행 및 명령어 연습
+        >python file명.py 
+
+    2. 하단 오른쪽 버튼 중 command prompt 선택
+        (base) C:\99.encore\10.flask>conda activate webenv
+        (webenv) C:\99.encore\10.flask>    
+
+
+4. 개발 단계
+    1단계
+        - Flask 인스턴스(객체) 생성
+        - server 실행
+            >python app1.py
+
+    2단계
+        - 서비스 하고자 하는 url에 맞는 장식자 기반의 함수 개발
+        - @app.route("url정보)
+    
+
+
+5. 소스
+    1. url 구성 
+        1. get방식만 처리하는 url 구성
+            @app.route("/playdata")
+
+        2. get과 post방식 모두 다 처리 하는 구성
+            @app.route("/playdata", methods=["get", "post"]) 
+
+        3. 실습 소스 구조
+            - flask 내부의 실행 엔진은 templates 하위의 파일들은 
+            flask instance 설정으로만 실행 가능
+            - 즉 직접적인 url 요청 처리 불가
+
+            
+            http://127.0.0.1:5000/req1 로 요청
+                @app.route("/req1", methods=["GET"])
+                app1.py의 reqres1()  함수 호출 및 실행
+                    -> res1.html 실행(최종 view)
+
+            http://127.0.0.1:5000/res1.html
+                - Not Found
+            http://127.0.0.1:5000/templates/res1.html
+                - Not Found
+
+
+
+6. 실습 단계
+    1단계
+        app1.py 로만 요청,응답
+    2단계
+        app1.py -> res1.html로 응답
+
+    3단계
+        app2.py -> res2.html로 응답
+            데이터 저장 -> html에서 출력
+
+    4단계
+        tomcat에서 실행중인 jsp에게 flask 기반의 html에서 접속 시도
+        html에서 버튼 개발(비동기) : 버튼클릭
+            -> jsp가 응답
+        상황
+            server는 두가지
+            주의사항 : port 중복 불허
+
+        실습 소스
+            eclipse - playdata.jsp
+                서버 실행 및 접속 대기중 ....
+            vse - ajaxtest.html & app3ajax.py
+
+    5단계
+        1. flask & emp table(mysql)
+        2. mvc
+        
+
+* 주의 사항
+    python은 가상환경 으로 인해 library 설치 여부 먼저 확인 필수 
+
